@@ -19,6 +19,7 @@ def execute(action):
 
     if percept(agent_location)["status"] == "dirty":
         env_state[agent_location] = "clean"
+        action = "clean"
         cumulative_reward -= 1
         return -1  # -1 for cleaning
     else:
