@@ -95,18 +95,10 @@ def get_next_position(current, action):
     return (r, c)
 
 
-# -------------------------------------------------
-# INITIAL PLANNING
-# -------------------------------------------------
-
 plan = bfs(grid, start, goal)
 
 print("Initial plan:", plan)
 
-
-# -------------------------------------------------
-# WORLD CHANGES
-# -------------------------------------------------
 
 # Block a cell
 grid[3][2] = '#'
@@ -121,11 +113,6 @@ print("\nCell (3, 2) has been blocked.")
 current = start
 
 while current != goal:
-
-    if not plan:
-        print("No plan available!")
-        break
-
     action = plan.pop(0)
 
     next_position = get_next_position(

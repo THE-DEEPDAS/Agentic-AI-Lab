@@ -10,7 +10,6 @@ grid = [
 rows = len(grid)
 cols = len(grid[0])
 
-# Find S and G
 for r in range(rows):
     for c in range(cols):
         if grid[r][c] == 'S':
@@ -18,7 +17,6 @@ for r in range(rows):
         elif grid[r][c] == 'G':
             goal = (r, c)
 
-# Directions
 directions = [
     (-1, 0, 'U'),
     (1, 0, 'D'),
@@ -26,7 +24,6 @@ directions = [
     (0, 1, 'R')
 ]
 
-# BFS
 queue = deque([start])
 visited = {start}
 
@@ -43,11 +40,7 @@ while queue:
         nr = r + dr
         nc = c + dc
 
-        if (0 <= nr < rows and
-            0 <= nc < cols and
-            grid[nr][nc] != '#' and
-            (nr, nc) not in visited):
-
+        if (0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] != '#' and (nr, nc) not in visited):
             visited.add((nr, nc))
             parent[(nr, nc)] = (r, c)
             move_taken[(nr, nc)] = move
@@ -55,7 +48,6 @@ while queue:
             queue.append((nr, nc))
 
 
-# Reconstruct path
 plan = []
 current = goal
 
@@ -68,14 +60,10 @@ plan.reverse()
 print("Planned actions:", plan)
 print("Number of steps:", len(plan))
 
-
-# Execute plan
 current = start
 
 print("\nExecution:")
-
 for action in plan:
-
     r, c = current
 
     if action == 'U':
