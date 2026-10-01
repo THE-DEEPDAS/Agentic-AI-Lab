@@ -117,7 +117,7 @@ def build_context(results):
     return context
 
 
-# we simply show the retrieved context as the grounded evidence because the lab intentionally scripts generation.
+# we simply show the retrieved context as the grounded evidence
 def grounded_answer(query, results):
 
     context = build_context(results)
@@ -160,7 +160,7 @@ for question in questions:
     print("QUESTION:", question)
     print()
 
-    # Retrieve top 2 chunks
+    # retrieve top 2 chunks
     results = retrieve(
         question,
         vectorizer,
