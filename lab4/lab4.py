@@ -1,7 +1,6 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-# CORE ALGORITHM
 # docs are stored as reference to content
 documents = {
     "AI.txt": """
@@ -28,7 +27,6 @@ documents = {
 }
 
 def create_chunks(documents, chunk_size=2, overlap=1):
-
     chunks = []
 
     for source, text in documents.items():
