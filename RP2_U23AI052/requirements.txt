@@ -1,0 +1,14 @@
+# core (mock runs, scoring, aggregation, tests)
+numpy>=1.26
+PyYAML>=6.0
+python-dotenv>=1.0
+jsonschema>=4.20
+matplotlib>=3.8
+pytest>=8.0
+# report and slides
+reportlab>=4.0
+python-pptx>=1.0
+pypdf>=5.0
+# model providers: install the one you use
+anthropic>=0.40      # provider: anthropic
+openai>=1.50         # provider: openai_compat (OpenAI, Groq, Gemini OpenAI-compatible endpoint, Ollama, vLLM)

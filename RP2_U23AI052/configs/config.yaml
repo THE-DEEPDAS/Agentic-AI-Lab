@@ -1,0 +1,55 @@
+# Pinned experiment configuration. Everything that affects a result lives here.
+# Edit `model` (and `provider`) BEFORE the real run, then do not change anything else
+# between runs. The runner copies this file into every results directory.
+
+experiment:
+  name: rp2_tool_count_context
+  subset_file: data/subset_200.json        # built by scripts/build_subset.py
+  tool_pool_file: data/tool_pool.json      # 87 tool schemas from all 6 benchmark categories
+  design_seed: 20261013                    # controls distractor sampling and ordering
+  n_runs: 3                                # whole-subset repetitions per condition
+  base_run_seed: 1000                      # provider seed = base_run_seed + run index (if supported)
+
+model:
+  provider: openai_compat      # one of: anthropic | openai_compat | mock
+  name: deepseek-ai/deepseek-v4.1-flash  # NVIDIA NIM model from the supplied example
+  base_url: https://integrate.api.nvidia.com/v1
+  api_key_env: LLM_API_KEY     # name of the environment variable holding the key (never commit keys)
+  temperature: 1.0             # NVIDIA recommends temperature=1.0 for DeepSeek V4.1 Flash
+  top_p: 0.95                  # NVIDIA's documented recommendation
+                               # temperature+top_p together); the manifest records this
+  max_tokens: 262144           # NVIDIA documents a minimum of 256K for this model
+  reasoning_effort: 1          # NVIDIA supports 1-100; tool selection needs minimal reasoning
+  timeout_s: 300
+  max_retries: 1
+
+runtime:
+  workers: 4                   # concurrent requests
+  max_requests_per_second: 2.0 # global pacing, lower this on free tiers
+
+prompts:
+  system: prompts/system.txt
+  user: prompts/user.txt
+  filler: prompts/filler.txt   # used only by the padded-context ablation arm
+
+# Conditions. All share the same prompt files; they differ ONLY in the tool list
+# (and, for c05_padded, in a neutral filler block that matches the c50 context length).
+conditions:
+  # --- Tier 1: the approved objective (5 vs 20 vs 50 tools in context) ---
+  - {id: c05, n_tools: 5,  order: shuffle,    tier: 1}
+  - {id: c20, n_tools: 20, order: shuffle,    tier: 1}
+  - {id: c50, n_tools: 50, order: shuffle,    tier: 1}
+  # --- Tier 2: ablations that isolate the changed component ---
+  # position control: does where the correct tool sits explain the c50 drop?
+  - {id: c50_goldfirst, n_tools: 50, order: gold_first, tier: 2}
+  - {id: c50_goldlast,  n_tools: 50, order: gold_last,  tier: 2}
+  # length control: same 5 tools but padded with neutral text to the c50 context length
+  - {id: c05_padded, n_tools: 5, order: shuffle, padded_to: c50, tier: 2}
+  # --- Tier 3: matched-budget control ---
+  # c05 baseline given k samples with majority vote, so its token spend approaches c50's.
+  # k is set from scripts/estimate_cost.py and re-checked against measured tokens in the report.
+  - {id: c05_sc, n_tools: 5, order: shuffle, self_consistency_k: 8, tier: 3}
+
+scoring:
+  fuzzy_f1_threshold: 0.5      # token-F1 threshold for free-text string parameters
+  latlon_decimals: 1           # same rule as the benchmark's judge prompt
