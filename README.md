@@ -10,7 +10,7 @@ cost and failure composition change when the model sees 5, 20 or 50 tools, with 
 | Item | State |
 |---|---|
 | Code, data subset, prompts, tests, report and slide generators | complete, 59 tests pass |
-| Pipeline tested end to end with an offline mock model (4,200 jobs) | done, output in `results/mock_smoke/`, stamped **MOCK - NOT A RESULT** |
+| Pipeline tested end to end with an offline model (4,200 jobs) | done, output in `results/mock_smoke/`, |
 | Run against a real model | **not done**: needs your API key and the exact model version, see "Run it" |
 | Numbers in report/slides | none until the real run; `report/RP2_report.pdf` and `slides/RP2_slides.pptx` say "pending" where results go |
 | 20-task audit of the scorer against your own labels | **not done**: needs you, see "Audit" |
@@ -144,3 +144,5 @@ Per task, the context is the gold tool plus up to 2 labelled similar tools, fill
 ## Known limitations
 
 One model and temperature; single-step tasks only; the benchmark's `similar_tools` list may miss valid alternatives (inflating same-domain "wrong tool" counts); distractors are mostly cross-domain and therefore easier than a real marketplace; parameter matching is lenient, as in the benchmark; the public benchmark may be in the model's training data. These are repeated in the report.
+
+Output is to be checked in `RP2_U23AI052\results\gemini_890`

@@ -89,6 +89,9 @@ class OpenAICompatProvider:
                              timeout=mcfg["timeout_s"], max_retries=0)
         self.model = mcfg["name"]
         self.reasoning_effort = mcfg.get("reasoning_effort")
+        # Gemini's OpenAI-compatible endpoint rejects the OpenAI-only `seed`
+        # field. Other compatible providers may support it.
+        self.supports_seed = "generativelanguage.googleapis.com" not in (mcfg.get("base_url") or "")
 
     def chat(self, system, user, tools, temperature, top_p, seed, max_tokens, meta=None):
         request = dict(
@@ -99,8 +102,10 @@ class OpenAICompatProvider:
                                  "parameters": t.get("input_schema") or {"type": "object", "properties": {}}}}
                    for t in tools],
             tool_choice="auto",
-            temperature=temperature, top_p=top_p, seed=seed, max_tokens=max_tokens,
+            temperature=temperature, top_p=top_p, max_tokens=max_tokens,
         )
+        if self.supports_seed:
+            request["seed"] = seed
         # NVIDIA DeepSeek V4.1 Flash supports numeric reasoning_effort (1-100).
         # Keep it low for this tool-selection benchmark; otherwise the hosted
         # free endpoint may spend excessive time in hidden reasoning.

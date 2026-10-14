@@ -1,0 +1,186 @@
+{
+  "c05_success": {
+    "uuid": "27c74bb0-48c8-47e6-b2d3-6665686f3a01",
+    "domain": "search",
+    "condition": "c05",
+    "run": 1,
+    "n_tools": 5,
+    "gold_position": 4,
+    "user": "Can you extract content from the Careers section of the website www.company.com in text format?",
+    "label": {
+      "name": "tavily-crawl",
+      "input": {
+        "url": "https://www.company.com",
+        "categories": [
+          "Careers"
+        ],
+        "format": "text"
+      },
+      "similar": []
+    },
+    "samples": [
+      {
+        "seed": null,
+        "text": "",
+        "tool_calls": [
+          {
+            "name": "tavily-crawl",
+            "arguments": "{\"url\":\"https://www.company.com\",\"format\":\"text\",\"categories\":[\"Careers\"]}"
+          }
+        ],
+        "error": null,
+        "usage": {
+          "input_tokens": 1216,
+          "output_tokens": 36,
+          "estimated": false
+        },
+        "latency_s": 1.4662,
+        "attempts": 1,
+        "model_returned": "gemini-3.5-flash-lite"
+      }
+    ],
+    "input_tokens": 1216,
+    "output_tokens": 36,
+    "latency_s": 1.4662,
+    "score": {
+      "tool_ok": true,
+      "param_ok": true,
+      "ast_ok": true,
+      "failure": null,
+      "pred_name": "tavily-crawl",
+      "pred_args": {
+        "url": "https://www.company.com",
+        "format": "text",
+        "categories": [
+          "Careers"
+        ]
+      },
+      "n_calls": 1,
+      "extra_calls": 0,
+      "detail": ""
+    },
+    "tool_names_head": [
+      "puppeteer_evaluate",
+      "maps_direction_transit_integrated",
+      "start_codegen_session",
+      "puppeteer_screenshot",
+      "tavily-crawl"
+    ]
+  },
+  "c50_failure": {
+    "uuid": "27c74bb0-48c8-47e6-b2d3-6665686f3a01",
+    "domain": "search",
+    "condition": "c50",
+    "run": 1,
+    "n_tools": 50,
+    "gold_position": 15,
+    "user": "Can you extract content from the Careers section of the website www.company.com in text format?",
+    "label": {
+      "name": "tavily-crawl",
+      "input": {
+        "url": "https://www.company.com",
+        "categories": [
+          "Careers"
+        ],
+        "format": "text"
+      },
+      "similar": []
+    },
+    "samples": [
+      {
+        "seed": null,
+        "text": "",
+        "tool_calls": [
+          {
+            "name": "tavily-extract",
+            "arguments": "{\"format\":\"text\",\"categories\":[\"Careers\"],\"extract_depth\":\"basic\",\"urls\":[\"https://www.company.com\"]}"
+          }
+        ],
+        "error": null,
+        "usage": {
+          "input_tokens": 9871,
+          "output_tokens": 44,
+          "estimated": false
+        },
+        "latency_s": 5.5647,
+        "attempts": 1,
+        "model_returned": "gemini-3.5-flash-lite"
+      }
+    ],
+    "input_tokens": 9871,
+    "output_tokens": 44,
+    "latency_s": 5.5647,
+    "score": {
+      "tool_ok": false,
+      "param_ok": false,
+      "ast_ok": false,
+      "failure": "wrong_tool_same_domain",
+      "pred_name": "tavily-extract",
+      "pred_args": {
+        "format": "text",
+        "categories": [
+          "Careers"
+        ],
+        "extract_depth": "basic",
+        "urls": [
+          "https://www.company.com"
+        ]
+      },
+      "n_calls": 1,
+      "extra_calls": 0,
+      "detail": "picked tavily-extract, expected ['tavily-crawl']"
+    },
+    "tool_names_head": [
+      "tavily-extract",
+      "start_codegen_session",
+      "playwright_iframe_fill",
+      "maps_search_places",
+      "create_invoice",
+      "puppeteer_evaluate",
+      "end_codegen_session",
+      "get_file_info",
+      "playwright_select",
+      "map_directions_matrix",
+      "map_place_details",
+      "playwright_get",
+      "read_file",
+      "map_mark",
+      "maps_ip_location",
+      "tavily-crawl",
+      "playwright_put",
+      "maps_direction_bicycling",
+      "maps_direction_transit_integrated",
+      "playwright_navigate",
+      "get_codegen_session",
+      "maps_schema_personal_map",
+      "create_refund",
+      "write_file",
+      "maps_direction_walking",
+      "maps_text_search",
+      "search",
+      "puppeteer_navigate",
+      "puppeteer_screenshot",
+      "create_subscription_plan",
+      "maps_reverse_geocode",
+      "edit_file",
+      "maps_geo",
+      "playwright_expect_response",
+      "maps_elevation",
+      "maps_geocode",
+      "search_files",
+      "tavily-map",
+      "clear_codegen_session",
+      "playwright_click_and_switch_tab",
+      "read_multiple_files",
+      "maps_around_search",
+      "map_directions",
+      "playwright_hover",
+      "create_product",
+      "playwright_post",
+      "maps_regeocode",
+      "get_stock_price_global_market",
+      "playwright_patch",
+      "create_order"
+    ]
+  }
+}

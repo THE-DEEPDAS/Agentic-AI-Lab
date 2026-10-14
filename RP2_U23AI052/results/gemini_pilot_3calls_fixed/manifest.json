@@ -1,0 +1,123 @@
+{
+  "rp2_version": "1.0.0",
+  "mock_run": false,
+  "NOT_A_RESULT": false,
+  "started_utc": "2026-10-14T13:13:47Z",
+  "finished_utc": "2026-10-14T13:14:08Z",
+  "python": "3.11.15",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "packages": {
+    "anthropic": "1.13.0",
+    "openai": "2.33.0",
+    "jsonschema": "4.26.0",
+    "numpy": "2.4.3",
+    "PyYAML": "6.0.3"
+  },
+  "repo_git_head": "5515b2c1a8c5072b91774c767a1a8923271faa77",
+  "model_requested": "gemini-3.8-flash",
+  "provider": "openai_compat",
+  "base_url": "https://generativelanguage.googleapis.com/v1beta/openai/",
+  "model_strings_returned_by_api": {},
+  "decoding": {
+    "temperature": 0.7,
+    "top_p": 1.0,
+    "max_tokens": 512,
+    "seed": "not supported by provider"
+  },
+  "n_runs": 1,
+  "n_tasks": 1,
+  "conditions": [
+    "c05",
+    "c20",
+    "c50"
+  ],
+  "prompt_sha256": {
+    "system": "dd61b09f154639bc0d4200d4b1cf70e385a314190bd34b6af9e89fbeb78cfe05",
+    "user": "afad6c9a64eae9b2255d4b0f9149adce01b1f0108e2012542edd368f54c2eda2",
+    "filler": "be1ede9b61370fec00f55c11d697cbc776ffa29836c005ac6ca242e1dd4cf4d7"
+  },
+  "data_sha256": {
+    "subset": "90dbba2ad0077423fa99b7ca717c04e0b84b7c7f26e86ee7af7d9f320edfd721",
+    "tool_pool": "b5a113648d55440c1e54451e42cae012a3cd7e984cc4c87516cc40708c212b89"
+  },
+  "config": {
+    "experiment": {
+      "name": "rp2_tool_count_context",
+      "subset_file": "data/subset_200.json",
+      "tool_pool_file": "data/tool_pool.json",
+      "design_seed": 20261013,
+      "n_runs": 3,
+      "base_run_seed": 1000
+    },
+    "model": {
+      "provider": "openai_compat",
+      "name": "gemini-3.8-flash",
+      "base_url": "https://generativelanguage.googleapis.com/v1beta/openai/",
+      "api_key_env": "LLM_API_KEY",
+      "temperature": 0.7,
+      "top_p": 1.0,
+      "max_tokens": 512,
+      "timeout_s": 120,
+      "max_retries": 1
+    },
+    "runtime": {
+      "workers": 4,
+      "max_requests_per_second": 2.0
+    },
+    "prompts": {
+      "system": "prompts/system.txt",
+      "user": "prompts/user.txt",
+      "filler": "prompts/filler.txt"
+    },
+    "conditions": [
+      {
+        "id": "c05",
+        "n_tools": 5,
+        "order": "shuffle",
+        "tier": 1
+      },
+      {
+        "id": "c20",
+        "n_tools": 20,
+        "order": "shuffle",
+        "tier": 1
+      },
+      {
+        "id": "c50",
+        "n_tools": 50,
+        "order": "shuffle",
+        "tier": 1
+      },
+      {
+        "id": "c50_goldfirst",
+        "n_tools": 50,
+        "order": "gold_first",
+        "tier": 2
+      },
+      {
+        "id": "c50_goldlast",
+        "n_tools": 50,
+        "order": "gold_last",
+        "tier": 2
+      },
+      {
+        "id": "c05_padded",
+        "n_tools": 5,
+        "order": "shuffle",
+        "padded_to": "c50",
+        "tier": 2
+      },
+      {
+        "id": "c05_sc",
+        "n_tools": 5,
+        "order": "shuffle",
+        "self_consistency_k": 8,
+        "tier": 3
+      }
+    ],
+    "scoring": {
+      "fuzzy_f1_threshold": 0.5,
+      "latlon_decimals": 1
+    }
+  }
+}

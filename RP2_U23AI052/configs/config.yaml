@@ -12,15 +12,14 @@ experiment:
 
 model:
   provider: openai_compat      # one of: anthropic | openai_compat | mock
-  name: deepseek-ai/deepseek-v4.1-flash  # NVIDIA NIM model from the supplied example
-  base_url: https://integrate.api.nvidia.com/v1
+  name: gemini-3.5-flash-lite          # Gemini-recommended current model for new users
+  base_url: https://generativelanguage.googleapis.com/v1beta/openai/
   api_key_env: LLM_API_KEY     # name of the environment variable holding the key (never commit keys)
-  temperature: 1.0             # NVIDIA recommends temperature=1.0 for DeepSeek V4.1 Flash
-  top_p: 0.95                  # NVIDIA's documented recommendation
+  temperature: 0.7
+  top_p: 1.0
                                # temperature+top_p together); the manifest records this
-  max_tokens: 262144           # NVIDIA documents a minimum of 256K for this model
-  reasoning_effort: 1          # NVIDIA supports 1-100; tool selection needs minimal reasoning
-  timeout_s: 300
+  max_tokens: 512
+  timeout_s: 120
   max_retries: 1
 
 runtime:
